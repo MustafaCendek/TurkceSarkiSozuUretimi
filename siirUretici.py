@@ -59,10 +59,10 @@ HamCikis = tf.data.Dataset.from_tensor_slices(cikis)
 
 # Metin uzerinde islem yapan fonksiyonlar
 def metinStandartlastirici(metin):
-    kucukharf     = tf.strings.lower(metin)
-    sayisiz  = tf.strings.regex_replace(kucukharf, "[\d-]", " ")
-    isaretsiz  =tf.strings.regex_replace(sayisiz, 
-                             "[%s]" % re.escape(string.punctuation), "")    
+    kucukharf = tf.strings.lower(metin)
+    sayisiz = tf.strings.regex_replace(kucukharf, "[\d-]", " ")
+    isaretsiz = tf.strings.regex_replace(sayisiz,
+                                         "[%s]" % re.escape(string.punctuation), "")
     return isaretsiz
 
 # Metin uzerinde islem yapan fonksiyonlar
@@ -78,8 +78,6 @@ vektorlestirici = TextVectorization(
     output_mode="int",
     output_sequence_length=girdiUzunlugu)
 
-
-print(vektorlestirici.get_vocabulary)
 # Katmanın veriye adapte olması
 vektorlestirici.adapt(HamGirisler.batch(batchSize))
 
@@ -97,7 +95,7 @@ def stringeCevir(vektorlestirilmisMetin):
         except:
             pass
     stringMetin = ''.join(stringDizi)
-    print("\t",stringMetin)
+    print("\t", stringMetin)
     return stringMetin
 
 
@@ -186,5 +184,7 @@ def Uretici(model=model_LSTM, tohum=tohum, step=uretilenKarakterSayisi, yontem="
 
 # Uretici Fonksiyonu Çağırma Şekilleri
 Uretici(yontem="greedy")
+
 Uretici(yontem="top-k", parametreler=[2, 3, 4, 5])
+
 Uretici(yontem="temperature", parametreler=[0.2, 0.5, 1.0, 1.2])
